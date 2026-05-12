@@ -3,9 +3,9 @@ from random import choice
 
 
 GREETING_RESPONSES = [
-    "Hello! How can I help you today?",
-    "Hi there 👋 What can I do for you?",
-    "Welcome to ABB Bank support. How may I assist you?",
+    "Hello! I am Jarvis. How can I help you today?",
+    "Hi there. My name is Jarvis. What can I do for you?",
+    "Welcome to ABB Bank support. I am Jarvis. How may I assist you?",
 ]
 
 

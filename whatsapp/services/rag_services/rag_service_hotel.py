@@ -1,42 +1,122 @@
-from langchain_chroma import Chroma
-from langchain_community.document_loaders import TextLoader
+from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_ollama import OllamaEmbeddings
+from langchain_community.vectorstores import Chroma
+import os
+from pathlib import Path
+from convert_to_txt import convert_to_txt
 from loguru import logger
 from typing import Tuple, List
-import os
 
 
-def embedd_document(document_path: str, vectorstore_path: str, embeddings) -> None:
-    """Load a text document, split it, and embed into Chroma."""
-    logger.info(f"[RAG] Embedding document: {document_path}")
+def clean_text(text: str) -> str:
+    """
+    Removes noisy lines before embedding.
+    Prevents brochure/website tone in RAG.
+    """
+    lines = text.splitlines()
+    cleaned = []
 
-    loader = TextLoader(document_path, encoding="utf-8")
-    documents = loader.load()
+    for line in lines:
+        line = line.strip()
 
-    splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50,
-        separators=["\n\n", "\n", ".", " "]
-    )
-    chunks = splitter.split_documents(documents)
+        if not line:
+            continue
 
-    Chroma.from_documents(
-        documents=chunks,
-        embedding=embeddings,
-        persist_directory=vectorstore_path
-    )
+        if len(line) < 3:
+            continue
 
-    logger.info(f"[RAG] Embedded {len(chunks)} chunks into Chroma at {vectorstore_path}")
+        if "copyright" in line.lower():
+            continue
+        if "all rights reserved" in line.lower():
+            continue
+
+        cleaned.append(line)
+
+    return "\n".join(cleaned)
 
 
-def load_vectorstore(vectorstore_path: str, embeddings) -> Chroma:
-    """Load an existing Chroma vectorstore from disk."""
-    logger.info(f"[RAG] Loading vectorstore from: {vectorstore_path}")
-    return Chroma(
-        persist_directory=vectorstore_path,
+def create_vector_store(vector_db_path, embeddings, chunks):
+    """
+    Create a vector store Chroma.
+    Returns: vectordb, persist_path
+    """
+    persist_path = vector_db_path
+    os.makedirs(persist_path, exist_ok=True)
+
+    vectordb = Chroma(
+        persist_directory=persist_path,
         embedding_function=embeddings
     )
 
+    vectordb.add_documents(chunks)
+    vectordb.persist()
+
+    logger.debug(
+        f"Vector store created at {persist_path} with {len(chunks)} chunks."
+    )
+
+    return vectordb, persist_path
+
+
+def load_vectorstore(db_path, embeddings):
+    if not os.path.isdir(db_path):
+        raise ValueError(f"Vector store not found at {db_path}")
+
+    return Chroma(
+        persist_directory=db_path,
+        embedding_function=embeddings
+    )
+
+
+
+def embedd_document(document_path, vector_db_path, embeddings):
+    """
+    Convert document to text, clean it, split into chunks,
+    and embed into Chroma vector store.
+    """
+    docs_text = convert_to_txt(document_path)
+
+    docs_text = clean_text(docs_text)
+
+    splitter = RecursiveCharacterTextSplitter(
+        chunk_size=300,
+        chunk_overlap=40,
+        separators=[
+            "\n\n",
+            "\n",
+            ". ",
+            "? ",
+            "! "
+        ]
+    )
+
+    text_chunks = splitter.split_text(docs_text)
+
+    chunks = []
+    for i, chunk in enumerate(text_chunks):
+        chunks.append(
+            Document(
+                page_content=chunk,
+                metadata={
+                    "source": str(document_path),
+                    "chunk_id": i,
+                    "type": "bank_knowledge"
+                }
+            )
+        )
+
+    vectordb, persist_path = create_vector_store(
+        vector_db_path,
+        embeddings,
+        chunks
+    )
+
+    logger.debug(
+        f"Document embedded successfully at {persist_path}"
+    )
+
+    return vectordb, persist_path
 
 def get_rag_context(query: str, vectorstore, k: int = 3) -> Tuple[List[str], List[float]]:
     """
@@ -44,7 +124,6 @@ def get_rag_context(query: str, vectorstore, k: int = 3) -> Tuple[List[str], Lis
     SAFE: handles None vectorstore + unexpected formats.
     """
 
-    # 🔴 Safety check (prevents your crash)
     if vectorstore is None:
         logger.warning("[RAG ERROR] Vectorstore is None")
         return [], []
@@ -62,10 +141,14 @@ def get_rag_context(query: str, vectorstore, k: int = 3) -> Tuple[List[str], Lis
             if isinstance(item, tuple) and len(item) == 2:
                 doc, score = item
 
-                # handle LangChain Document safely
                 content = getattr(doc, "page_content", None)
                 if content is None:
                     content = str(doc)
+
+                content = content.strip()
+
+                if len(content) < 5:
+                    continue
 
                 docs.append(content)
                 scores.append(float(score))
