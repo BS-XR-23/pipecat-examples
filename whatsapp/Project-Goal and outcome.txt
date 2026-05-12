@@ -1,0 +1,50 @@
+Multi-Tenant WhatsApp Voice and Chatbot SaaS Platform
+Project Goal
+Develop a scalable multi-tenant WhatsApp-based AI Voice and Chatbot SaaS platform that enables businesses to deploy and manage intelligent domain-specific AI agents for customer support, information retrieval, task automation, and conversational services through both voice and text interactions.
+Project Description
+The project is a Multi-Tenant WhatsApp Voice and Chatbot SaaS Application designed to allow multiple vendors to create, manage, and deploy AI-powered conversational agents through a centralized dashboard.
+
+Each vendor has access to an independent dashboard where they can:
+• Create and configure AI agents
+• Define system prompts and upload RAG (Retrieval-Augmented Generation) documents
+• Monitor agent activities and tool usage through detailed agent logs
+• Select and activate agents for WhatsApp voice and chatbot interactions
+1. Banking Agent
+The banking agent is designed for ABB Bank customer support and can:
+• Answer customer queries related to banking services
+• Retrieve customer account and balance information securely
+• Create support tickets for reported issues
+• Handle both voice and text-based conversations on WhatsApp
+2. Hotel Agent
+The hotel agent is designed for Hotel Sayeman and can:
+• Provide hotel-related information and customer assistance
+• Handle room booking requests based on user preferences
+• Cancel bookings upon customer request
+• Support both voice and chatbot interactions via WhatsApp
+Key Features
+• Multi-tenant SaaS architecture
+• WhatsApp voice and chatbot integration
+• Dynamic AI agent management
+• Vendor-specific dashboards
+• RAG-based knowledge retrieval
+• Tool usage tracking and agent logs
+• Booking and ticket management workflows
+• Scalable architecture for future domain-specific agents
+Future Scope
+The platform is designed with scalability and extensibility in mind. In the future, additional AI agents can be developed for various industries such as healthcare, e-commerce, education, customer service, travel, and finance, using the same modular architecture and management system.
+
+Learning Outcomes
+Through the development of the Multi-Tenant WhatsApp Voice and Chatbot SaaS Platform, the following learning outcomes were achieved:
+Gained practical experience in designing and developing a multi-tenant SaaS application architecture.
+Learned how to integrate WhatsApp-based voice and chatbot communication systems for real-time user interaction.
+Developed knowledge of AI-powered conversational agent design and management.
+Implemented Retrieval-Augmented Generation (RAG) techniques using custom documents for domain-specific responses.
+Acquired experience in integrating Large Language Models (LLMs) for intelligent query handling and task automation.
+Learned how to build vendor-specific dashboards for agent configuration, monitoring, and management.
+Developed skills in creating workflow-based AI functionalities such as ticket creation, booking management, and cancellation systems.
+Improved understanding of secure user data retrieval and conversational flow management.
+Gained experience in tool invocation tracking and agent activity logging for monitoring and debugging purposes.
+Learned how to design scalable and extensible systems capable of supporting multiple industries and future AI agents.
+Enhanced backend development and API integration skills for real-world AI applications.
+Improved problem-solving and system design capabilities in AI-driven customer service solutions.
+
