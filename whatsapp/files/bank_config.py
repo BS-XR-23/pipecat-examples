@@ -1,0 +1,26 @@
+from agents.bank.agent_tools import *
+from agents.bank.graph import build_graph
+
+BANK_CONFIG = {
+    "name": "bank",
+    "tools": {
+        "get_account_balance": get_account_balance,
+        "get_user_info": get_user_info,
+        "create_ticket": create_ticket,
+    },
+    "graph": build_graph,
+    "memory": {
+        "profile": {},
+        "history": [],
+        "ticket": {},
+        "flow": {
+            "active": None,
+            "step": None,
+            "expandable": False,
+            "last_expand_offer": False,
+        }
+    },
+    "vector_db": ".../ABB_Bank",
+    "document": ".../ABB_Bank.txt",
+    "prompt": ".../system_prompt.txt"
+}

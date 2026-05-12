@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Set Agent Session</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 50px auto;
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+    }
+    button {
+      cursor: pointer;
+      background: #007bff;
+      color: white;
+      border: none;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Assign Agent to Session</h2>
+
+  <input id="session_id" placeholder="Session ID (e.g. 8801701001398)" />
+  <input id="agent_name" placeholder="Agent Name (e.g. bank, hotel)" />
+
+  <button onclick="setAgent()">Set Agent</button>
+
+  <h3>Response:</h3>
+  <pre id="output"></pre>
+
+  <script>
+    const BASE_URL = "https://arseniuretted-shelton-unspited.ngrok-free.dev"; // change if needed
+
+    async function setAgent() {
+      const session_id = document.getElementById("session_id").value;
+      const agent_name = document.getElementById("agent_name").value;
+
+      const output = document.getElementById("output");
+
+      if (!session_id || !agent_name) {
+        output.innerText = "❌ session_id and agent_name are required";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${BASE_URL}/set-agent-session`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            session_id,
+            agent_name
+          })
+        });
+
+        const data = await res.json();
+
+        output.innerText = JSON.stringify(data, null, 2);
+
+      } catch (err) {
+        output.innerText = "❌ Error: " + err.message;
+      }
+    }
+  </script>
+
+</body>
+</html>

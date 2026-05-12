@@ -1,0 +1,188 @@
+QA Pair 1:
+1. What services are offered by ABB Mobile for international money transfers?
+   ABB Mobile offers the DigiTransfer service for convenient, quick, and secure international money transfers to 46 countries. Users can benefit from a 0% commission promotion on their first transfer and track transactions in real time through the app.
+
+2. How can one send money abroad using an IBAN through ABB Mobile?
+   To send money abroad via IBAN using ABB Mobile, users can open the "Transfers" section in the app, select "International Transfers," enter the recipient's IBAN and bank details, confirm the amount, and complete the transaction. This method allows for quick, secure, and sometimes free transfers.
+
+3. What are the benefits of making an international transfer via IBAN through ABB Mobile?
+   Making an international transfer via IBAN through ABB Mobile offers cost-effective transfers, commission-free transfers during promotional campaigns, and in some cases, completely free transfers. This method makes international money transfers more accessible and affordable for users.
+
+4. Which countries can money be sent to using the DigiTransfer service of ABB Mobile?
+   With the DigiTransfer service, users can send money quickly, cost-effectively, and sometimes commission-free to countries like Turkey, the United States, Italy, Belgium, Lithuania, Germany, and many others. This service provides users with the flexibility to transfer money abroad with minimal fees.
+
+5. How can one apply for a business loan from ABB?
+   To apply for a business loan from ABB, individuals need to provide the necessary documents, specify the purpose of the loan, and understand the interest rates and requirements. The application process typically involves submitting the required documentation and meeting the criteria set by ABB for business loans.
+
+QA Pair 2:
+1. What is the purpose of the "YAŞAT" Fund mentioned in the text?
+The purpose of the "YAŞAT" Fund is to provide additional support to state-led measures in the field of social protection for the families of martyrs and individuals disabled as a result of military operations, as well as to ensure transparency, accountability, and public oversight in this area.
+
+2. What are the advantages of the advance credit offered by ABB Bank?
+The advantages of the advance credit offered by ABB Bank include immediate access to funds, the ability to cover urgent expenses without waiting for the next salary or pension, a grace period with no interest charges, and a convenient application process through the ABB mobile app.
+
+3. How can individuals apply for a repair loan of up to 200,000 AZN at ABB Bank?
+Individuals with official income can apply for a repair loan of up to 200,000 AZN at ABB Bank through the ABB Home platform, the ABB mobile application, the Bank's official website, or at any ABB Bank branch.
+
+4. What services does ABB Bank offer for guarantees, and what are some of the features mentioned?
+ABB Bank offers services for guarantees such as issuance and notification of guarantees, approval by correspondent banks, multi-currency transactions, and risk management. Features include isolating funds in one currency and issuing the guarantee in another currency, transmission of guarantee information via SWIFT, and confirmation of guarantees received from other banks.
+
+5. How can entrepreneurs easily obtain a loan or line of credit tailored to their needs at ABB Bank?
+Entrepreneurs can easily obtain a loan or line of credit at ABB Bank within 1 business day without detailed financial analysis or collateral. The process can be done online with minimal paperwork, and no guarantee is required.
+
+QA Pair 3:
+1. What is the main difference between a promissory note and a letter of credit in terms of usage?
+Promissory notes are used when reliable relations are established between the contractual partners and solvency is not in doubt, unlike letters of credit which are typically used for transactions where solvency might be a concern.
+
+2. How can one earn income by placing funds in a deposit account with ABB?
+By placing funds in a deposit account with ABB, individuals can enjoy stable income with interest rates of up to 10% annually for a deposit period ranging from 1 month to 3 years, with a minimum amount requirement of 300 AZN or USD.
+
+3. What are the benefits of using ABB mobile for banking transactions?
+ABB mobile allows users to perform daily banking transactions safely and quickly, offering features such as secure login with SIMA İmza, real-time threat detection with IBM, and a stronger 6-digit PIN for enhanced security.
+
+4. How can individuals participate in the capital markets through ABB's services?
+Individuals can participate in the capital markets through ABB's services by investing in ABB shares, tracking their share portfolios through the ABB mobile app, and engaging in buying and selling shares on the stock market.
+
+5. What additional benefits can company employees enjoy by using the Mastercard Corporate Travel & Expense card?
+Company employees using the Mastercard Corporate Travel & Expense card can benefit from services like a 24/7 concierge service, Crisis24 Travel Risk Management alerts, free airport services like Fast Track access and lounge access, and discounts on car rentals and travel bookings.
+
+QA Pair 4:
+1. What services does ABB offer for international money transfers?
+ABB offers fast international money transfers in multiple currencies such as Turkish Lira, Euro, and US Dollars to 46 countries with commission fees starting from 0.5%.
+
+2. How can customers protect themselves from cyber fraud when dealing with their bank?
+Customers can protect themselves from cyber fraud by following guidelines such as not sharing confidential information with anyone claiming to be a bank employee, verifying urgent money requests from loved ones, and researching discount and gift offers before proceeding.
+
+3. What benefits can customers enjoy by using the Tam Visa card from Bank ABB?
+Customers can benefit from the Tam Visa card by receiving gifts from partner establishments like "Park Cinema," "Costa Coffee," and "Crunch Burger" for card transactions ranging from AZN 200 to 1,000, earning up to 6% on their card balance, and up to 10% cashback through "Faydalı" cashback packages.
+
+4. How can customers start using the DigiDeposit service offered by ABB?
+Customers can start using the DigiDeposit service by logging in to ABB Mobile, tapping the "+" icon, selecting "DigiDeposit," and then clicking on "Start now" in the pop-up window to create up to 30 deposits anytime and anywhere.
+
+5. What information and resources can customers find in the Brand Center of ABB?
+In the Brand Center of ABB, customers can access detailed information about the brand's identity, usage guidelines, and visual assets, ensuring consistency and clarity in the brand's visual and communication standards.
+
+QA Pair 5:
+What are the benefits of using the mobile POS terminal in the ABB Biz app for small businesses?
+Using the mobile POS terminal in the ABB Biz app allows your small business to accept cashless payments easily, integrate with your smartphone or tablet in minutes, and enjoy advanced encryption for secure transactions while minimizing the risk of fraud.
+How can youth aged 18-29 earn rewards through ABB's partner network?
+Youth aged 18-29 can earn rewards through ABB's partner network by completing tasks and activities specified by the partners, offering a program called FaydaMania.
+What is the process for ordering an MPOS terminal from ABB?
+To order an MPOS terminal from ABB, you need to create an MPOS order in the ABB Biz app, complete the terminal application with a few clicks, sign the created contract, wait for terminal activation, and start accepting card payments immediately after activation.
+What is an insured deposit according to the "Deposit insurance Law of Azerbaijan Republic"?
+An insured deposit is a part or the whole deposit eligible for compensation in case of an insurance incident at a participating bank, based on the clauses of the "Deposit insurance Law of Azerbaijan Republic."
+How are compensations for insured deposits handled in different currencies?
+For deposits nominated in national currency, the compensation is paid in AZN; for deposits in multiple currencies, the compensation is paid in AZN as one deposit; for USD deposits, compensation is paid in USD and EUR; and for other currencies, compensation is paid in USD or EUR based on the Central Bank's official exchange rate.
+
+QA Pair 6:
+1. What are the advantages of using a live currency converter for financial transactions?
+   - The advantages of using a live currency converter include the ability to instantly calculate amounts between two different currencies, view buying and selling rates in real time, and make accurate calculations for travel, online shopping, and international payments. It also helps users compare rate differences, plan financial decisions more precisely, and monitor market changes effectively.
+
+2. How does the ABB eSIM service benefit travelers?
+   - The ABB eSIM service allows travelers to access reliable internet across different countries without the need for a physical SIM card. Users can make purchases and payments, manage selected packages, and connect to different mobile operators cost-effectively. Additionally, purchasing the ABB eSIM service through the ABB mobile app avoids the application of 18% VAT, providing additional cost savings.
+
+3. What are the steps to order POS services in ABB Biz?
+   - To order POS services in ABB Biz, one needs to create an MPOS order, sign the generated contract, and wait for the terminal to be created. This process enables businesses to choose the POS service that fits their needs, such as Mobile POS terminals for accepting cashless payments conveniently.
+
+4. How does a Mobile POS differ from QR code payment, and are these payment methods secure?
+   - A Mobile POS allows businesses to accept cashless payments on the spot with a portable terminal, while QR code payments involve scanning a code for transactions. Both methods offer secure payment options, with Mobile POS providing a physical terminal for card payments, and QR code payments offering a contactless payment solution through scanning codes.
+
+5. What are some key benefits of investing in ABB Bank bonds?
+   - Investing in ABB Bank bonds offers stable returns, contributes to the development of the capital market, and provides opportunities for trading on the secondary market. Individual investors benefit from priority applications, exemption from taxation on interest payments, and the option to trade bonds listed on the Baku Stock Exchange.
+
+QA Pair 7:
+1. What are the benefits of using the "Buy now, pay later" service through ABB's mobile app?
+Interest-free payments with no additional annual interest applied, installment payment options in two-weekly or monthly plans, and the convenience of completing transactions via the ABB mobile app to receive your product.
+
+2. How can you personalize your Visa Business Platinum card with ABB?
+You can customize your Visa Business Platinum card with your company name to align it with your brand, making it a unique representation of your business.
+
+3. What additional benefits can you enjoy with the Visa Business Platinum card?
+You can benefit from services like the Visa Business Concierge, accounting consultation by Accounting.az, insurance coverage abroad, access to business lounges and airport transfers, fast track services, discounts at IHG Hotels, medical and legal assistance, and discounts on car rentals and more.
+
+4. How can you open a DigiHesab account with ABB in three simple steps?
+To open a DigiHesab account, you need to go to the "All products" section in the ABB mobile app, select "Accounts," and then choose "Open DigiHesab" to create a current account in different currencies.
+
+5. What are some of the advantages of investing in stocks through the ABB mobile app?
+By investing in shares of leading global companies through the ABB mobile app, you can secure your future, move towards financial independence, benefit from transparent real-time transactions, and manage your portfolio conveniently in one user-friendly and secure platform.
+
+QA Pair 8:
+1. What are the benefits of providing employees with Visa Classic PayWave and Mastercard Standard PayPass salary cards?
+Employees benefit from free payments, obtaining an international payment card without additional cost, free cash withdrawals, and the ability to make payments and cash withdrawals abroad conveniently.
+
+2. How can customers order a confirmation letter for their account from Bank ABB online?
+Customers can order a confirmation letter for their account by visiting the "Online Services" section on the bank's homepage, selecting the "Order statement" option, providing necessary personal information, choosing account type and branch, uploading ID card photos, specifying display preferences, paying the service fee, and collecting the statement from the branch.
+
+3. What services can customers access through the Bank ABB Call Center at 937?
+Customers can obtain services such as balance and account balance information, details on card transactions, information about cash loans, card status checks, PIN reset, card blocking and activation, requests regarding ATM usage, activation of SMS notification and 3D Secure services, and more by contacting the Bank ABB Call Center at 937.
+
+4. How can customers participate in the Cashback Holiday Campaign offered by Bank ABB?
+To participate in the Cashback Holiday Campaign, customers need to make purchases for the assigned amount during the transaction period, activate their gift in the ABB mobile app, and shop in designated categories to earn up to 5% cashback on March 21. Cashback categories include Restaurants, Supermarkets, Taxi, Confectionery, and Cinemas.
+
+5. What is the Fayda Max Subscription program introduced by Bank ABB?
+The Fayda Max Subscription program by Bank ABB allows customers to subscribe on a monthly basis to different stages (Bronze, Silver, Gold) within the Fayda Max program. Customers can complete tasks to reach higher stages and pay the difference to access desired stages. The subscription model provides immediate access to rewards, discounted pricing, and automatic renewal for convenience.
+
+QA Pair 9:
+1. What services related to a letter of credit does ABB offer?
+ABB offers services such as opening, amending, verifying documents, processing payments, consulting, confirming and issuing letters of credit, and informing beneficiaries about letters of credit issued by other banks.
+
+2. How can individual entrepreneurs register for ABB Biz services?
+Individual entrepreneurs can register online in the app without visiting a branch to access ABB Biz services.
+
+3. What are the benefits of opening a Dama-dama account with ABB?
+With a Dama-dama account, you can create up to 6 different accounts and goals, set goals starting from a minimum of 10 AZN, automate transfers, and earn up to 6% annually with no loss of interest.
+
+4. How can customers make loan payments to ABB and various institutions?
+Customers can easily make their loan payments to ABB and various institutions through the ABB mobile app in the “ABB Bank/TamKart loan” section.
+
+5. What special campaign is offered to ABB-AZAL Miles cardholders during specific holidays?
+During special days when Novruz and Ramadan holidays coincide, ABB-AZAL Miles cardholders can earn double miles for cashless transactions made in selected MCC categories eligible for miles, such as catering services, supermarkets, entertainment services, and more.
+
+QA Pair 10:
+1. What information must a consumer provide when submitting a complaint to a bank for consideration?
+To ensure the consideration and response of a request, a consumer must provide the bank with their first name, last name, patronymic, contact number (e-mail address), date of birth, address of registration or place of residence, and the content of the appeal.
+
+2. How can consumers submit their comments to a bank regarding a proposal or complaint?
+Consumers can submit their comments to the bank in oral, written, or electronic form. They can provide comments orally to specific staff, send a letter to relevant branches of the bank, or even email their comments to the bank's Head Office.
+
+3. What are the requirements for customers applying for a car loan from ABB?
+Customers applying for a car loan from ABB must have more than 6 months of work experience, have worked at their current workplace for at least six months, be salary cardholders of any bank, and be between 20 and 65 years old at the time of the last loan repayment.
+
+4. What are the key benefits of participating in the "Fayda Max" rewards program?
+By participating in the "Fayda Max" rewards program, customers can benefit from features such as increased cashback on specific categories, cashback on DigiDeposit income, and rewards for achieving specific goals at different stages of the program.
+
+5. How can customers obtain an auto loan to purchase a vehicle?
+To obtain an auto loan for purchasing a vehicle, customers need to select their desired vehicle from official dealerships, apply for the loan, provide details such as the car's price and down payment, and follow the approval process to determine the loan amount and repayment schedule.
+
+QA Pair 11:
+1. What are the advantages of using the "Faydalı" cashback service offered by ABB?
+   - The advantages of using the "Faydalı" cashback service include high cashback percentages from different packages, instant refund of cashback to the account in cash equivalent, and the opportunity to transfer the cashback to the card.
+
+2. How does the Cash by Code service provided by ABB work?
+   - The Cash by Code service allows individuals to transfer money to recipients who do not have a bank card. Transfers are made online, and the recipient can receive the funds immediately. The code for the transfer is valid for 24 hours.
+
+3. What are the benefits of using QR code payments for businesses according to ABB?
+   - QR code payments offer benefits such as simple usage, secure transactions through encrypted data processing, immediate crediting of the amount to the account, and no commission fees, making it a cost-effective payment solution.
+
+4. How can businesses manage their QR transactions with ABB's QR code services?
+   - Businesses can manage their QR transactions by generating QR codes for payments, accepting fast payments with static QR codes, refunding payments, creating QR code orders, and applying for a QR terminal through the ABB Biz platform.
+
+5. How can ABB assist corporate clients in enhancing their investment opportunities?
+   - ABB provides corporate clients with investment opportunities through its ABB Business Internet Bank platform, where clients can access detailed information on investment services, analyze market interest rates, calculate profits, and receive immediate assistance from specialized financial consultants.
+
+QA Pair 12:
+1. What types of deposit products were suspended by the Bank according to the decision of the Management Board?
+   The Bank suspended "Multivalyuta," "Yığım," "Uşaq," "Pensiya yığım" deposit types, and the "Əmanət kartı" product, as well as deposits in EUR and GBP currencies.
+
+2. What incomes of natural persons on new deposits in the national currency are exempted from income tax according to the Tax Code starting from January 1, 2024?
+   Incomes exempted from income tax include the part of monthly interest income calculated on deposits up to 200 manats and the full part of the calculated interest income for a period of 3 years if the deposit is placed for 18 months or more and the amount is paid no earlier than 18 months.
+
+3. How does the Dama-dama savings account offered by ABB help customers save money?
+   The Dama-dama savings account allows customers to automatically transfer small leftover amounts from daily purchases to their savings, turning saving into a habit and helping accumulate a significant amount over time from regular small contributions.
+
+4. What insurance products are available through the ABB mobile app?
+   The ABB mobile app offers insurance products such as travel insurance, vehicle insurance, voluntary property insurance, and medical insurance to help individuals secure their future and be prepared for unexpected events.
+
+5. How many branches and offices does ABB have, and what services does it provide to its clients?
+   ABB has 78 branches and 9 offices covering various regions of Azerbaijan. The Bank provides universal banking services to both individual and corporate clients, with over 43,000 corporate clients and more than 3 million individual clients served.
+

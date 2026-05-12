@@ -1,0 +1,46 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# server.py  — minimal patch  (only 2 lines change)
+# ─────────────────────────────────────────────────────────────────────────────
+#
+# ── Change 1 ──────────────────────────────────────────────────────────────────
+# Add near the other env-var reads at the top (e.g. after line 68):
+#
+#   VOICE_AGENT = os.getenv("VOICE_AGENT", "bank")   # "bank" | "hotel"
+#
+#
+# ── Change 2 ──────────────────────────────────────────────────────────────────
+# Inside _handle_call_webhook(), in connection_callback, change:
+#
+#   background_tasks.add_task(run_bot, connection)
+#
+# to:
+#
+#   background_tasks.add_task(run_bot, connection, VOICE_AGENT)
+#
+#
+# ── That's it — full context shown below for clarity ──────────────────────────
+#
+#   async def connection_callback(connection: SmallWebRTCConnection):
+#       try:
+#           logger.info(f"Starting bot for WebRTC connection: {connection.pc_id}")
+#           background_tasks.add_task(run_bot, connection, VOICE_AGENT)  # ← changed
+#           logger.debug(f"Bot task queued successfully for connection: {connection.pc_id}")
+#       except Exception as e:
+#           logger.error(f"Failed to start bot for connection {connection.pc_id}: {e}")
+#           try:
+#               await connection.disconnect()
+#               logger.debug(f"Connection {connection.pc_id} disconnected after error")
+#           except Exception as disconnect_error:
+#               logger.error(f"Failed to disconnect connection after error: {disconnect_error}")
+#
+#
+# ── Agent selection chain ──────────────────────────────────────────────────────
+#
+#   .env  VOICE_AGENT=hotel
+#     → server.py       VOICE_AGENT = os.getenv("VOICE_AGENT", "bank")
+#       → run_bot()     agent_name = "hotel"
+#         → GraphOrchestrator(agent_name="hotel", session_id=...)
+#           → get_agent("hotel")           # agent_registry.py
+#             → AgentConfig(HOTEL_CONFIG)  # agent_config.py
+#               → build_graph()            # agents/hotel/graph.py
+#                 → Ollama (reasoning, RAG, tools) — unchanged

@@ -45,8 +45,8 @@ from collections import defaultdict, deque
 from db.database import SessionLocal
 from bot import run_bot
 from loguru import logger
-from pipecat.transports.smallwebrtc.connection import SmallWebRTCConnection, IceServer
-# from pipecat.transports.whatsapp.api import WhatsAppWebhookRequest
+from pipecat.transports.smallwebrtc.connection import SmallWebRTCConnection
+from pipecat.transports.whatsapp.api import WhatsAppWebhookRequest
 from pipecat.transports.whatsapp.client import WhatsAppClient
 from langchain_ollama import OllamaEmbeddings
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request
@@ -55,7 +55,7 @@ from ollama import AsyncClient
 from core.agent_registry import get_agent, AGENTS
 from utils.helpers import normalize_session_id
 from whatsapp_message.schemas import (
-    WhatsAppMessageWebhookRequest,WhatsAppWebhookRequest
+    WhatsAppMessageWebhookRequest,
 )
 
 
@@ -67,7 +67,6 @@ WHATSAPP_PHONE_NUMBER_ID = os.getenv("WHATSAPP_PHONE_NUMBER_ID")
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GOOGLE_MODEL = os.getenv("GOOGLE_MODEL", "gemini-2.5-flash")
 OLLAMA_API_KEY = os.getenv("OLLAMA_API_KEY")
-VOICE_AGENT = os.getenv("VOICE_AGENT", "bank")   # "bank" | "hotel"
 
 if not all([WHATSAPP_TOKEN, WHATSAPP_WEBHOOK_VERIFICATION_TOKEN, WHATSAPP_PHONE_NUMBER_ID]):
     missing_vars = [
@@ -93,16 +92,9 @@ session_memory = defaultdict(lambda: deque(maxlen=MAX_HISTORY))
 # session_to_agent: Dict[str, str] = {} 
 session_to_agent = {}
 session_memory = {}
-DEFAULT_AGENT = "bank"
-pending_agent: str = DEFAULT_AGENT
 
-# ── Voice bot config — updated by /configure-agent ───────────────────────────
-# session_id is hardcoded for now; agent_name is set at configure time.
-FALLBACK_VOICE_SESSION = "+8801701001398"
-voice_bot_config: dict = {
-    "agent_name": VOICE_AGENT,
-    "session_id": FALLBACK_VOICE_SESSION,   # overwritten dynamically at call time
-}
+# DEFAULT_AGENT = "bank"
+DEFAULT_AGENT = "hotel"
 app = FastAPI(
     title="Unified WhatsApp Agent Server",
     version="2.0.0"
@@ -135,100 +127,40 @@ def init_memory(session_id: str, agent):
         )
 
 
-
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global whatsapp_client, ollama_client
 
-    logger.info("Starting application lifespan")
-
     async with aiohttp.ClientSession() as session:
-
-        # 🔍 DEBUG: confirm TURN env (optional)
-        turn_user = os.getenv("TWILIO_TURN_USERNAME")
-        turn_pass = os.getenv("TWILIO_TURN_PASSWORD")
-
-        if turn_user and turn_pass:
-            logger.info("Using Twilio TURN credentials")
-        else:
-            logger.warning("Twilio TURN not found → using public TURN (testing only)")
-
-        # ✅ ICE SERVERS (STUN + TURN fallback)
-        ice_servers = [
-            IceServer(
-                urls="stun:stun.l.google.com:19302"
-            ),
-
-            # ✅ UDP TURN (MOST IMPORTANT)
-            IceServer(
-                urls="turn:openrelay.metered.ca:3478?transport=udp",
-                username="openrelayproject",
-                credential="openrelayproject",
-            ),
-
-            # ✅ TCP fallback
-            IceServer(
-                urls="turn:openrelay.metered.ca:3478?transport=tcp",
-                username="openrelayproject",
-                credential="openrelayproject",
-            ),
-
-            # ✅ TLS fallback (very important for restrictive networks)
-            IceServer(
-                urls="turns:openrelay.metered.ca:443?transport=tcp",
-                username="openrelayproject",
-                credential="openrelayproject",
-            ),
-        ]
-
-        # 🔁 If Twilio creds exist, override TURN
-        if turn_user and turn_pass:
-            ice_servers.append(
-                IceServer(
-                    urls="turn:global.turn.twilio.com:3478",
-                    username=turn_user,
-                    credential=turn_pass,
-                )
-            )
-
-        # ✅ WhatsApp Client with ICE
         whatsapp_client = WhatsAppClient(
-            whatsapp_token=os.getenv("WHATSAPP_TOKEN"),
-            phone_number_id=os.getenv("WHATSAPP_PHONE_NUMBER_ID"),
-            session=session,
-            ice_servers=ice_servers,
+            whatsapp_token=WHATSAPP_TOKEN,
+            phone_number_id=WHATSAPP_PHONE_NUMBER_ID,
+            session=session
         )
 
-        logger.info(f"WhatsApp client initialized with {len(ice_servers)} ICE servers")
+        logger.info("WhatsApp client initialized")
 
-        # ✅ Ollama client
         ollama_client = AsyncClient()
 
-        # 🔥 Warmup (non-blocking)
         async def warmup():
             try:
                 await ollama_client.generate(
                     model="gemma4:e4b",
                     prompt="warmup",
-                    stream=False,
+                    stream=False
                 )
-                logger.info("LLM warmed up successfully")
+                logger.info("LLM warmed up")
             except Exception as e:
-                logger.warning(f"LLM warmup failed: {e}")
+                logger.warning(f"Warmup failed: {e}")
 
         asyncio.create_task(warmup())
 
         yield
 
-        # 🧹 Shutdown cleanup
-        logger.info("Application shutting down")
-
+        logger.info("Shutting down...")
         if whatsapp_client:
-            try:
-                await whatsapp_client.terminate_all_calls()
-                logger.info("All WhatsApp calls terminated")
-            except Exception as e:
-                logger.warning(f"Error during WhatsApp shutdown: {e}")
+            await whatsapp_client.terminate_all_calls()
+
 
 app.router.lifespan_context = lifespan
 
@@ -316,9 +248,9 @@ async def _handle_message_webhook(body: WhatsAppMessageWebhookRequest):
                     agent_name = session_to_agent.get(sender)
 
                     if not agent_name:
-                        agent_name = pending_agent          # ← uses last configured agent
+                        agent_name = DEFAULT_AGENT
                         session_to_agent[sender] = agent_name
-                        logger.info(f"[ROUTING INIT] {sender} -> {agent_name} (from pending_agent)")
+                        logger.info(f"[ROUTING INIT] {sender} -> {agent_name}")
                     else:
                         logger.info(f"[ROUTING LOCKED] {sender} -> {agent_name}")
 
@@ -337,10 +269,10 @@ async def _handle_message_webhook(body: WhatsAppMessageWebhookRequest):
 
                     # -------------------- LLM CALL --------------------
                     llm_response = await _generate_llm_response(
-                        session_id=normalize_session_id(sender),
-                        message=user_text,
-                        agent_name=agent_name
-                    )
+                            session_id=normalize_session_id(sender),
+                            message=user_text,
+                            agent_name=agent_name
+                        )
 
                     if not llm_response or not llm_response.strip():
                         llm_response = "Sorry, I couldn't process your request. Please try again."
@@ -354,135 +286,42 @@ async def _handle_message_webhook(body: WhatsAppMessageWebhookRequest):
         return {"status": "error-handled"}
 
 
-async def _handle_call_webhook(
-    body: Any,
-    background_tasks: BackgroundTasks
-):
-    if body.object != "whatsapp_business_account":
-        raise HTTPException(status_code=400, detail="Invalid object type")
-
-    logger.info(f"Processing WhatsApp call webhook: {body.model_dump()}")
-
-    # ── Skip terminal/non-actionable call events ──────────────────────────────
-    for entry in (body.entry or []):
-        for change in (entry.changes or []):
-            for call in (change.value.calls or []):
-                if call.event in ("terminate", "terminated", "completed"):
-                    logger.info(f"Ignoring terminal call event: {call.event} / {call.status}")
-                    return {"status": "ignored", "reason": f"terminal event: {call.event}"}
-
-    # ── Resolve caller session + agent dynamically ────────────────────────────
-    caller_session = None
-    resolved_agent = pending_agent     # fallback if number can't be extracted
-
-    for entry in (body.entry or []):
-        for change in (entry.changes or []):
-            for call in (change.value.calls or []):
-                raw_number = getattr(call, "from_", None)
-                if raw_number:
-                    caller_session = normalize_session_id(raw_number)
-                    break
-            if caller_session:
-                break
-        if caller_session:
-            break
-
-    if caller_session:
-        # If this caller already has a locked agent, honour it;
-        # otherwise assign the pending agent and lock it.
-        if caller_session in session_to_agent:
-            resolved_agent = session_to_agent[caller_session]
-            logger.info(f"[CALL ROUTING LOCKED] {caller_session} -> {resolved_agent}")
-        else:
-            resolved_agent = pending_agent
-            session_to_agent[caller_session] = resolved_agent
-            logger.info(f"[CALL ROUTING INIT] {caller_session} -> {resolved_agent} (from pending_agent)")
-    else:
-        # No number found — fall back to voice_bot_config set by /configure-agent
-        # in the fallback branch inside _handle_call_webhook
-        caller_session = voice_bot_config.get("session_id", FALLBACK_VOICE_SESSION)
-        resolved_agent = voice_bot_config.get("agent_name", VOICE_AGENT)
-        logger.warning(f"[CALL ROUTING FALLBACK] caller number not found, using config: {caller_session} -> {resolved_agent}")
-
-    # ── Capture resolved values in closure for WebRTC callback ───────────────
-    async def connection_callback(connection: SmallWebRTCConnection):
-        logger.info(f"WebRTC connection established: {connection.pc_id} | session={caller_session} | agent={resolved_agent}")
-        asyncio.create_task(
-            run_bot(
-                connection,
-                resolved_agent,
-                caller_session,
-            )
-        )
-
-    try:
-        result = await whatsapp_client.handle_webhook_request(body, connection_callback)
-        return {"status": "success"}
-
-    except ValueError as ve:
-        if "No supported event" in str(ve):
-            logger.info(f"Ignoring unsupported call event: {ve}")
-            return {"status": "ignored"}   # 200 OK — Meta expects this
-        raise HTTPException(status_code=400, detail=str(ve))
-
-    except Exception as e:
-        logger.error(f"Internal error processing webhook: {e}")
-        raise HTTPException(status_code=500, detail="Internal server error processing webhook")
-
-
 @app.post("/configure-agent")
 async def configure_agent(payload: dict):
-    global pending_agent
 
     agent_type = payload.get("agent_type")
+
     if not agent_type or agent_type not in AGENTS:
         raise HTTPException(
             status_code=400,
             detail=f"Unknown agent_type: {agent_type}. Allowed: {list(AGENTS.keys())}"
         )
 
-    # ── Reload text agent paths ────────────────────────────────────────────────
     AGENTS[agent_type].reload_paths(
-        vector_db_id      = payload.get("vector_db_id"),
-        document_path     = payload.get("document_address"),
-        system_prompt_raw = payload.get("system_prompt"),
-        hash_address      = payload.get("hash_address"),
-        llm_model         = payload.get("llm_model"),
-        embedding_model   = payload.get("embedding_model"),
+        vector_db_id       = payload.get("vector_db_id"),   # ✅ FIXED
+        document_path      = payload.get("document_address"),
+        system_prompt_raw  = payload.get("system_prompt"),
+        hash_address       = payload.get("hash_address"),
+        llm_model          = payload.get("llm_model"),
+        embedding_model    = payload.get("embedding_model"),
     )
-    logger.info(f"[TEXT AGENT CONFIGURED] {agent_type} reloaded")
 
-    # ── Reload voice agent paths ───────────────────────────────────────────────
-    from voice_agent_registry import reload_voice_agent_paths
-    try:
-        reload_voice_agent_paths(
-            agent_name      = agent_type,
-            vector_db_id    = payload.get("vector_db_id"),
-            document_path   = payload.get("document_address"),
-            system_prompt   = payload.get("system_prompt"),
-            hash_address    = payload.get("hash_address"),
-            llm_model       = payload.get("llm_model"),
-            embedding_model = payload.get("embedding_model"),
-        )
-        logger.info(f"[VOICE AGENT CONFIGURED] {agent_type} paths reloaded")
-    except Exception as e:
-        logger.warning(f"[VOICE AGENT CONFIG] reload failed: {e}")
+    logger.info(f"[AGENT CONFIGURED] {agent_type} reloaded")
 
-    pending_agent = agent_type
-    session_to_agent.clear()
-    logger.info(f"[PENDING AGENT SET] Next new session will be assigned -> {agent_type}")
-    logger.info(f"[SESSION LOCKS CLEARED] All sessions will re-bind to {agent_type}")
+    HARDCODED_SESSION = "01701001398"
+    normalized_session = normalize_session_id(HARDCODED_SESSION)
 
-    # ── Keep voice_bot_config in sync as a fallback ───────────────────────────
-    voice_bot_config["agent_name"] = agent_type
-    voice_bot_config["session_id"] = FALLBACK_VOICE_SESSION
-    logger.info(f"[VOICE BOT CONFIGURED] agent={agent_type} | fallback_session={FALLBACK_VOICE_SESSION}")
+    session_to_agent[normalized_session] = agent_type
+
+    logger.info(
+        f"[HARDCODED SESSION ASSIGNED] {normalized_session} -> {agent_type}"
+    )
 
     return {
-        "status": "configured",
+        "status": "success",
         "agent_type": agent_type,
         "agent_name": payload.get("agent_name", agent_type),
-        "note": "Agent will be bound to sender on first incoming WhatsApp message or call",
+        "session_bound": HARDCODED_SESSION
     }
 
 
@@ -506,6 +345,7 @@ async def set_agent_session(payload: dict):
         "status":     "success",
         "agent_name": agent_name
     }
+
 
 async def _send_whatsapp_text_message(to: str, text: str) -> dict:
     """Send a text message to a WhatsApp user via the WhatsApp Cloud API."""
@@ -579,6 +419,48 @@ async def verify_webhook(request: Request):
 )
 async def verify_message_webhook(request: Request):
     return await _verify_whatsapp_webhook(request)
+
+
+async def _handle_call_webhook(body: WhatsAppWebhookRequest, background_tasks: BackgroundTasks):
+    """Process WhatsApp call webhook payload and start the call bot."""
+    if body.object != "whatsapp_business_account":
+        logger.warning(f"Invalid webhook object type: {body.object}")
+        raise HTTPException(status_code=400, detail="Invalid object type")
+
+    logger.info(f"Processing WhatsApp call webhook: {body.dict()}")
+
+    async def connection_callback(connection: SmallWebRTCConnection):
+        """Handle new WebRTC connections from WhatsApp calls.
+
+        Called when a WebRTC connection is established for a WhatsApp call.
+        Spawns a bot instance to handle the conversation.
+
+        Args:
+            connection: The established WebRTC connection
+        """
+        try:
+            logger.info(f"Starting bot for WebRTC connection: {connection.pc_id}")
+            background_tasks.add_task(run_bot, connection)
+            logger.debug(f"Bot task queued successfully for connection: {connection.pc_id}")
+        except Exception as e:
+            logger.error(f"Failed to start bot for connection {connection.pc_id}: {e}")
+            try:
+                await connection.disconnect()
+                logger.debug(f"Connection {connection.pc_id} disconnected after error")
+            except Exception as disconnect_error:
+                logger.error(f"Failed to disconnect connection after error: {disconnect_error}")
+
+    try:
+        result = await whatsapp_client.handle_webhook_request(body, connection_callback)
+        logger.debug(f"Webhook processed successfully: {result}")
+        return {"status": "success", "message": "Call webhook processed successfully"}
+
+    except ValueError as ve:
+        logger.warning(f"Invalid webhook request format: {ve}")
+        raise HTTPException(status_code=400, detail=f"Invalid request: {str(ve)}")
+    except Exception as e:
+        logger.error(f"Internal error processing webhook: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error processing webhook")
  
 
 @app.post("/")
@@ -603,22 +485,14 @@ async def root_webhook(request: Request, background_tasks: BackgroundTasks):
             elif field == "calls":
                 call_fields = True
 
-    
     if message_fields:
         body = WhatsAppMessageWebhookRequest.model_validate(payload)
-
-        asyncio.create_task(
-            _handle_message_webhook(body)
-        )
-
+        background_tasks.add_task(_handle_message_webhook, body)
         return {"status": "accepted"}
 
-
     if call_fields:
-        # Use pipecat's OWN model — not your custom one
-        from pipecat.transports.whatsapp.api import WhatsAppWebhookRequest as PipecatWebhookRequest
-        pipecat_body = PipecatWebhookRequest.model_validate(payload)
-        asyncio.create_task(_handle_call_webhook(pipecat_body, background_tasks))
+        body = WhatsAppWebhookRequest.model_validate(payload)
+        background_tasks.add_task(_handle_call_webhook, body, background_tasks)
         return {"status": "accepted"}
 
     return {"status": "ignored"}
