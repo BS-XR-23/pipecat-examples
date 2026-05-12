@@ -1,4 +1,5 @@
-Multi-Tenant WhatsApp Voice and Chatbot SaaS Platform
+## Multi-Tenant WhatsApp Voice and Chatbot SaaS Platform
+
 Project Goal
 Develop a scalable multi-tenant WhatsApp-based AI Voice and Chatbot SaaS platform that enables businesses to deploy and manage intelligent domain-specific AI agents for customer support, information retrieval, task automation, and conversational services through both voice and text interactions.
 Project Description
@@ -9,19 +10,23 @@ Each vendor has access to an independent dashboard where they can:
 • Define system prompts and upload RAG (Retrieval-Augmented Generation) documents
 • Monitor agent activities and tool usage through detailed agent logs
 • Select and activate agents for WhatsApp voice and chatbot interactions
+
 1. Banking Agent
 The banking agent is designed for ABB Bank customer support and can:
 • Answer customer queries related to banking services
 • Retrieve customer account and balance information securely
 • Create support tickets for reported issues
 • Handle both voice and text-based conversations on WhatsApp
+
 2. Hotel Agent
 The hotel agent is designed for Hotel Sayeman and can:
 • Provide hotel-related information and customer assistance
 • Handle room booking requests based on user preferences
 • Cancel bookings upon customer request
 • Support both voice and chatbot interactions via WhatsApp
-Key Features
+
+
+## Key Features
 • Multi-tenant SaaS architecture
 • WhatsApp voice and chatbot integration
 • Dynamic AI agent management
@@ -33,7 +38,7 @@ Key Features
 Future Scope
 The platform is designed with scalability and extensibility in mind. In the future, additional AI agents can be developed for various industries such as healthcare, e-commerce, education, customer service, travel, and finance, using the same modular architecture and management system.
 
-Learning Outcomes
+## Learning Outcomes
 Through the development of the Multi-Tenant WhatsApp Voice and Chatbot SaaS Platform, the following learning outcomes were achieved:
 Gained practical experience in designing and developing a multi-tenant SaaS application architecture.
 Learned how to integrate WhatsApp-based voice and chatbot communication systems for real-time user interaction.
