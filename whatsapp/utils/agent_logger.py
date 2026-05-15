@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 load_dotenv()  # Load environment variables from .env file
 
-INVENTORY_BASE_URL = "https://yards-classes-its-angle.trycloudflare.com"
+INVENTORY_BASE_URL = "https://industry-suddenly-tear-alto.trycloudflare.com"
 AGENT_LOG_ENDPOINT = f"{INVENTORY_BASE_URL}/agents/internal/agent-logs"
 VENDOR_TOKEN_ENDPOINT = f"{INVENTORY_BASE_URL}/auth/vendor/token"
 

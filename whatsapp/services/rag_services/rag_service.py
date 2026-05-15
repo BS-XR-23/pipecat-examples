@@ -8,10 +8,6 @@ from convert_to_txt import convert_to_txt
 from loguru import logger
 from typing import Tuple, List
 
-
-# -------------------------
-# TEXT CLEANING (NEW)
-# -------------------------
 def clean_text(text: str) -> str:
     """
     Removes noisy lines before embedding.
@@ -81,15 +77,10 @@ def embedd_document(document_path, vector_db_path, embeddings):
     and embed into Chroma vector store.
     """
 
-    # Extract raw text
     docs_text = convert_to_txt(document_path)
 
-    # ✅ CLEAN TEXT BEFORE CHUNKING
     docs_text = clean_text(docs_text)
 
-    # -------------------------
-    # BETTER CHUNKING (same structure, improved quality)
-    # -------------------------
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=300,
         chunk_overlap=40,
@@ -104,9 +95,6 @@ def embedd_document(document_path, vector_db_path, embeddings):
 
     text_chunks = splitter.split_text(docs_text)
 
-    # -------------------------
-    # ADD METADATA TO CHUNKS (NEW)
-    # -------------------------
     chunks = []
     for i, chunk in enumerate(text_chunks):
         chunks.append(
